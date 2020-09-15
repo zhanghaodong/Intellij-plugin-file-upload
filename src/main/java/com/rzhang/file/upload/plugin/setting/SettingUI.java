@@ -1,4 +1,4 @@
-package com.rzhang.marklogic.plugin.setting;
+package com.rzhang.file.upload.plugin.setting;
 
 import com.intellij.ui.components.JBPasswordField;
 import com.intellij.ui.components.JBTextField;

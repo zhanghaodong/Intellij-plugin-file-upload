@@ -17,14 +17,14 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <projectConfigurable groupId="tools" displayName="Marklogic Plugin" id="marklogic.id" order="last"
-                             instance="com.rzhang.marklogic.plugin.setting.SettingConfigurable" nonDefaultProject="true"/>
+        <projectConfigurable groupId="tools" displayName="File Uploader" id="fileUpload.id" order="last"
+                             instance="com.rzhang.file.upload.plugin.setting.SettingConfigurable" nonDefaultProject="true"/>
     </extensions>
 
     <actions>
         <!-- Add your actions here -->
-        <action id="PushFile" class="com.rzhang.marklogic.plugin.action.PushAction" text="ML Push"
-                description="Push files to MarkLogic">
+        <action id="PushFile" class="com.rzhang.file.upload.plugin.action.PushAction" text="File Push"
+                description="Push files to Servers">
             <add-to-group group-id="FileChooserToolbar" anchor="first"/>
         </action>
     </actions>

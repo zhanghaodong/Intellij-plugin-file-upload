@@ -1,4 +1,4 @@
-package com.rzhang.marklogic.plugin.setting;
+package com.rzhang.file.upload.plugin.setting;
 
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
@@ -13,13 +13,12 @@ import javax.swing.*;
  */
 public class SettingConfigurable implements SearchableConfigurable {
 
-    public static final String DISPLAY_NAME = "MarkLogic Plugin";
-    private final PersistentConfig config = PersistentConfig.getInstance();
+    public static final String DISPLAY_NAME = "File Uploader";
     private SettingUI settingUI;
 
     @Override
     public @NotNull String getId() {
-        return "marklogic.id";
+        return "fileUpload.id";
     }
 
     @Nls(capitalization = Nls.Capitalization.Title)
@@ -36,6 +35,7 @@ public class SettingConfigurable implements SearchableConfigurable {
 
     @Override
     public boolean isModified() {
+        PersistentConfig config = PersistentConfig.getInstance();
         boolean modified = !settingUI.getUserName().equals(config.getUserName());
         modified |= settingUI.getUrl().equals(config.getUri());
         modified |= String.valueOf(settingUI.getPassword()).equals(config.getPassword());
@@ -44,6 +44,7 @@ public class SettingConfigurable implements SearchableConfigurable {
 
     @Override
     public void apply() throws ConfigurationException {
+        PersistentConfig config = PersistentConfig.getInstance();
         config.setUserName(settingUI.getUserName());
         config.setPassword(String.valueOf(settingUI.getPassword()));
         config.setUri(settingUI.getUrl());
@@ -51,6 +52,7 @@ public class SettingConfigurable implements SearchableConfigurable {
 
     @Override
     public void reset() {
+        PersistentConfig config = PersistentConfig.getInstance();
         settingUI.setUserName(config.getUserName());
         settingUI.setPassword(config.getPassword());
         settingUI.setUrl(config.getUri());

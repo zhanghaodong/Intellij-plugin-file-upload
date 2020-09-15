@@ -1,0 +1,32 @@
+<idea-plugin>
+    <id>marklogic-plugin</id>
+    <name>Simple MarkLogic</name>
+    <version>1.0</version>
+    <vendor email="haodong233@gmail.com">Rex Zhang</vendor>
+
+    <description>An simple plugin for push files to MarkLogic</description>
+
+    <change-notes>An simple plugin for push files to MarkLogic</change-notes>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="173.0"/>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <projectConfigurable groupId="tools" displayName="Marklogic Plugin" id="marklogic.id" order="last"
+                             instance="com.rzhang.marklogic.plugin.setting.SettingConfigurable" nonDefaultProject="true"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="PushFile" class="com.rzhang.marklogic.plugin.action.PushAction" text="ML Push"
+                description="Push files to MarkLogic">
+            <add-to-group group-id="FileChooserToolbar" anchor="first"/>
+        </action>
+    </actions>
+
+</idea-plugin>

@@ -17,16 +17,18 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <projectConfigurable groupId="tools" displayName="File Uploader" id="fileUpload.id" order="last"
-                             instance="com.rzhang.file.upload.plugin.setting.SettingConfigurable" nonDefaultProject="true"/>
+        <applicationService serviceImplementation="com.rzhang.file.upload.plugin.setting.FileUploadConfig"/>
+        <projectService serviceImplementation="com.rzhang.file.upload.plugin.util.MessageUtils" />
+        <applicationConfigurable groupId="tools" displayName="File Uploader" id="fileUpload.id" order="last"
+                             instance="com.rzhang.file.upload.plugin.setting.FileUploadSettingConfigurable" nonDefaultProject="true"/>
+        
     </extensions>
 
     <actions>
         <!-- Add your actions here -->
         <action id="PushFile" class="com.rzhang.file.upload.plugin.action.PushAction" text="File Push"
                 description="Push files to Servers">
-            <add-to-group group-id="FileChooserToolbar" anchor="first"/>
+            <add-to-group group-id="CutCopyPasteGroup" anchor="first"/>
         </action>
     </actions>
-
 </idea-plugin>

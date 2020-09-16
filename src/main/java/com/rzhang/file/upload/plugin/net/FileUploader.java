@@ -1,7 +1,8 @@
 package com.rzhang.file.upload.plugin.net;
 
 import com.intellij.openapi.vfs.VirtualFile;
-import com.rzhang.file.upload.plugin.setting.PersistentConfig;
+import com.rzhang.file.upload.plugin.setting.FileUploadConfig;
+import com.rzhang.file.upload.plugin.util.MessageUtils;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
@@ -17,24 +18,27 @@ import java.util.Objects;
 public class FileUploader {
 
     private final static CloseableHttpClient client = HttpClients.createDefault();
-    private final PersistentConfig persistentConfig = PersistentConfig.getInstance();
+    private final FileUploadConfig persistentConfig = FileUploadConfig.getInstance();
     private final HttpClientContext context;
     private volatile static FileUploader fileUploader;
 
     private FileUploader(){
         context = HttpClientContext.create();
         CredentialsProvider credentials = new BasicCredentialsProvider();
-        credentials.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(persistentConfig.getUserName(), persistentConfig.getPassword()));
+        credentials.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(persistentConfig.getUserName(), persistentConfig.getPassWord()));
         context.setCredentialsProvider(credentials);
     }
 
     public void uploadFile(VirtualFile file) throws IOException {
-        HttpPut httpPut = new HttpPut(persistentConfig.getUri());
+        HttpPut httpPut = new HttpPut(persistentConfig.getUrl());
         httpPut.setEntity(new StringEntity(file.getUserDataString()));
         try {
             CloseableHttpResponse response = client.execute(httpPut, context);
+            if (response.getStatusLine().getStatusCode() == 200){
+                MessageUtils.showAllWarnMsg("info", String.format("Upload file %s successfully", file.getCanonicalPath()));
+            }
         }catch (Exception e){
-            System.out.println(e.toString());
+            MessageUtils.showAllWarnMsg("error", "Uploaded to servers failed");
         }
     }
 

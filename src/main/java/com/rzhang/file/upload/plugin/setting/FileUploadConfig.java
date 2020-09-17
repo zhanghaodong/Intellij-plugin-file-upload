@@ -5,6 +5,7 @@ import com.intellij.openapi.components.*;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 /**
  * @author Rex Zhang
  */
@@ -14,11 +15,12 @@ public class FileUploadConfig implements PersistentStateComponent<FileUploadConf
     private String userName;
     private String passWord;
     private String url;
-    public transient volatile boolean AUTHENTICATION_CANCELLED;
+    private String fileExtension;
 
     public static FileUploadConfig getInstance() {
         return ServiceManager.getService(FileUploadConfig.class);
     }
+
     @Nullable
     @Override
     public FileUploadConfig getState() {
@@ -52,5 +54,13 @@ public class FileUploadConfig implements PersistentStateComponent<FileUploadConf
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getFileExtension() {
+        return fileExtension;
+    }
+
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
     }
 }

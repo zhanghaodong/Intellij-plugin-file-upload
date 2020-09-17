@@ -20,7 +20,7 @@ public class FileUploadSettingUI implements ConfigurableUi<FileUploadConfig> {
     private final JTextField myLoginTextField = new JBTextField();
     private final JPasswordField myPasswordTextField = new JPasswordField();
     private final JTextField myUrlTextField = new JTextField();
-
+    private final JTextField fileExtension = new JTextField();
     public FileUploadSettingUI(){
         super();
         init();
@@ -28,27 +28,27 @@ public class FileUploadSettingUI implements ConfigurableUi<FileUploadConfig> {
 
     @Override
     public void reset(@NotNull FileUploadConfig fileUploadConfig) {
-        fileUploadConfig.setUserName(fileUploadConfig.getUserName());
-        fileUploadConfig.setPassWord(fileUploadConfig.getPassWord());
-        fileUploadConfig.setUrl(fileUploadConfig.getUrl());
+        myLoginTextField.setText(fileUploadConfig.getUserName());
+        myPasswordTextField.setText(fileUploadConfig.getPassWord());
+        myUrlTextField.setText(fileUploadConfig.getUrl());
+        fileExtension.setText(fileUploadConfig.getFileExtension());
     }
 
     @Override
     public boolean isModified(@NotNull FileUploadConfig fileUploadConfig) {
-        return  !Comparing.strEqual(myLoginTextField.getText(), fileUploadConfig.getUserName())
+        return  !Comparing.strEqual(getText(myLoginTextField), fileUploadConfig.getUserName())
                 || !Comparing.strEqual(String.valueOf(myPasswordTextField.getPassword()), fileUploadConfig.getPassWord())
-                || !Comparing.strEqual(myUrlTextField.getText(), fileUploadConfig.getUrl());
+                || !Comparing.strEqual(getText(myUrlTextField), fileUploadConfig.getUrl())
+                || !Comparing.strEqual(getText(fileExtension), fileUploadConfig.getFileExtension());
 
     }
 
     @Override
     public void apply(@NotNull FileUploadConfig fileUploadConfig) throws ConfigurationException {
-            if (this.isModified(fileUploadConfig)) {
-                fileUploadConfig.AUTHENTICATION_CANCELLED = false;
-            }
             fileUploadConfig.setUserName(getText(myLoginTextField));
             fileUploadConfig.setPassWord(String.valueOf(myPasswordTextField.getPassword()));
             fileUploadConfig.setUrl(getText(myUrlTextField));
+            fileUploadConfig.setFileExtension(getText(fileExtension));
     }
 
     @Override
@@ -59,10 +59,16 @@ public class FileUploadSettingUI implements ConfigurableUi<FileUploadConfig> {
         return myMainPanel;
     }
 
+    @Override
+    public @Nullable JComponent getPreferredFocusedComponent() {
+        return getComponent();
+    }
+
     private void init() {
         this.myMainPanel = FormBuilder.createFormBuilder().addLabeledComponent("User name", this.myLoginTextField)
                 .addLabeledComponent("Password", myPasswordTextField)
-                .addLabeledComponent("Server url", myUrlTextField).getPanel();
+                .addLabeledComponent("Server url", myUrlTextField)
+                .addLabeledComponent("File extension", fileExtension).getPanel();
     }
 
 

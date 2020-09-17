@@ -26,9 +26,10 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="PushFile" class="com.rzhang.file.upload.plugin.action.PushAction" text="File Push"
+        <action id="PushFile" class="com.rzhang.file.upload.plugin.action.PushAction" text="Push to Server"
                 description="Push files to Servers">
             <add-to-group group-id="CutCopyPasteGroup" anchor="first"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
     </actions>
 </idea-plugin>
